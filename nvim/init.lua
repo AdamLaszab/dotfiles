@@ -15,9 +15,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
-vim.opt.background = "dark" -- or "light" for light mode
+vim.opt.background = "dark"
 vim.opt.termguicolors = true
-vim.cmd("colorscheme oxocarbon")
+vim.cmd("colorscheme gruvbox-material")
 vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
 vim.api.nvim_set_hl(0, "Cursor", { bg = "#F0FF00" })
@@ -34,19 +34,19 @@ vim.opt.tabstop = 2
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
-vim.opt.signcolumn = "number"
+vim.opt.signcolumn = "yes:1"
 -- Navigate vim panes better
-vim.keymap.set('n', '<C-h>', ':TmuxNavigateLeft<CR>')
-vim.keymap.set('n', '<C-j>', ':TmuxNavigateDown<CR>')
-vim.keymap.set('n', '<C-k>', ':TmuxNavigateUp<CR>')
-vim.keymap.set('n', '<C-l>', ':TmuxNavigateRight<CR>')
+vim.keymap.set("n", "<C-h>", ":TmuxNavigateLeft<CR>")
+vim.keymap.set("n", "<C-j>", ":TmuxNavigateDown<CR>")
+vim.keymap.set("n", "<C-k>", ":TmuxNavigateUp<CR>")
+vim.keymap.set("n", "<C-l>", ":TmuxNavigateRight<CR>")
 -- Windows clipboard integration
 vim.keymap.set("v", "<leader>y", '"+y', { noremap = true, silent = true }) -- Copy to Windows clipboard
 vim.keymap.set("n", "<leader>p", '"+p', { noremap = true, silent = true }) -- Paste from Windows clipboard
 
 -- Save quit keybinds
-vim.keymap.set("n", "<leader>w",':w<CR>',{ noremap = true, silent = true })
-vim.keymap.set("n", "<leader>q",':wq<CR>',{ noremap = true, silent = true })
+vim.keymap.set("n", "<leader>w", ":w<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>q", ":wq<CR>", { noremap = true, silent = true })
 
 -- telescope binds
 local builtin = require("telescope.builtin")
