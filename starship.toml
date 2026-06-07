@@ -1,0 +1,44 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Palette definition (Kanagawa Dragon + Imperial Gold)
+# Gold: #e5c07b
+# Dark Grey: #16161d
+# Mid Grey: #2d2d3a
+# Light Grey: #c8c093
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$time\
+\n$character"""
+
+[directory]
+style = "fg:#16161d bg:#e5c07b"
+format = "[ $path ]($style)"
+truncation_length = 4
+truncation_symbol = ".../"
+
+[git_branch]
+symbol = ""
+style = "fg:#e5c07b bg:#2d2d3a"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "fg:#e5c07b bg:#2d2d3a"
+deleted = "✘ "    
+untracked = ""  
+modified = "!"  
+stashed = "󰏗"   
+renamed = "»"
+format = '[([$all_status$ahead_behind ]($style))]($style)'
+
+[time]
+disabled = false
+time_format = "%R" 
+style = "fg:#a6a69c bg:#16161d"
+format = '[  $time ]($style)'
+
+[character]
+success_symbol = "[ ❯](bold #e5c07b)"
+error_symbol = "[ ❯](bold #c4746e)"
