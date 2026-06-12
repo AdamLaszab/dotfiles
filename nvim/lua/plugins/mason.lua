@@ -40,6 +40,7 @@ return {
 				"tailwindcss",
 				"html",
 				"cssls",
+				"clangd",
 			})
 
 			vim.api.nvim_create_autocmd("BufWritePre", {
