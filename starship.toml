@@ -1,10 +1,11 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# Palette definition (Kanagawa Dragon + Imperial Gold)
-# Gold: #e5c07b
-# Dark Grey: #16161d
-# Mid Grey: #2d2d3a
-# Light Grey: #c8c093
+# Palette definition (Oxocarbon Dark)
+# Purple (Primary Accent): #be95ff
+# Pink / Magenta (Accent / Error): #ee5396
+# Dark Grey (Base): #161616
+# Mid Grey (Subtle): #262626
+# Light Grey (Foreground text): #dde1e6
 
 format = """
 $directory\
@@ -14,18 +15,18 @@ $time\
 \n$character"""
 
 [directory]
-style = "fg:#16161d bg:#e5c07b"
+style = "fg:#161616 bg:#be95ff"
 format = "[ $path ]($style)"
 truncation_length = 4
 truncation_symbol = ".../"
 
 [git_branch]
 symbol = ""
-style = "fg:#e5c07b bg:#2d2d3a"
+style = "fg:#be95ff bg:#262626"
 format = '[ $symbol $branch ]($style)'
 
 [git_status]
-style = "fg:#e5c07b bg:#2d2d3a"
+style = "fg:#be95ff bg:#262626"
 deleted = "✘ "    
 untracked = ""  
 modified = "!"  
@@ -36,9 +37,9 @@ format = '[([$all_status$ahead_behind ]($style))]($style)'
 [time]
 disabled = false
 time_format = "%R" 
-style = "fg:#a6a69c bg:#16161d"
+style = "fg:#dde1e6 bg:#161616"
 format = '[  $time ]($style)'
 
 [character]
-success_symbol = "[ ❯](bold #e5c07b)"
-error_symbol = "[ ❯](bold #c4746e)"
+success_symbol = "[ ❯](bold #be95ff)"
+error_symbol = "[ ❯](bold #ee5396)"

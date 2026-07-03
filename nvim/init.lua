@@ -16,10 +16,26 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 
 vim.opt.background = "dark"
+vim.cmd("colorscheme oxocarbon")
+
+-- Make Neovim transparent (add these lines right after loading the colorscheme)
+local transparent_groups = {
+	"Normal",
+	"NormalNC",
+	"NormalFloat",
+	"SignColumn",
+	"LineNr",
+	"CursorLineNr",
+	"Folded",
+}
+
+for _, group in ipairs(transparent_groups) do
+	vim.api.nvim_set_hl(0, group, { bg = "none" })
+end
+
 vim.opt.termguicolors = true
 vim.api.nvim_set_hl(0, "Cursor", { bg = "#F0FF00" })
 vim.opt.guicursor = "n-v-c:block-Cursor/lCursor"
-vim.opt.termguicolors = true
 vim.api.nvim_set_hl(0, "TermCursor", { bg = "#F0FF00" })
 
 vim.opt.cursorline = true
@@ -53,7 +69,7 @@ vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-vim.keymap.set("n", "<leader>ld", builtin.diagnostics, { desc = "List diagnostics" })
+vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "List diagnostics" })
 
 -- oil.nvim binds
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
