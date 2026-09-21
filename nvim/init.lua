@@ -13,7 +13,12 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins")
+require("lazy").setup("plugins", {
+	-- None of your plugins need luarocks. One of them (oxocarbon.nvim) ships
+	-- a .rockspec, so with rocks enabled lazy tries a luarocks/hererocks
+	-- build that fails ("lua version 5.1 not installed"). Disable it.
+	rocks = { enabled = false },
+})
 
 vim.opt.background = "dark"
 vim.cmd("colorscheme oxocarbon")

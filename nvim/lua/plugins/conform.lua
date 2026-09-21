@@ -1,5 +1,17 @@
 return {
 	"stevearc/conform.nvim",
+	event = { "BufWritePre" },
+	cmd = { "ConformInfo" },
+	keys = {
+		{
+			"<leader>f",
+			function()
+				require("conform").format({ async = true, lsp_format = "fallback" })
+			end,
+			mode = { "n", "v" },
+			desc = "Format buffer",
+		},
+	},
 	config = function()
 		vim.g.disable_autoformat = false
 		require("conform").setup({
@@ -26,8 +38,12 @@ return {
 				asm = { "asmfmt" },
 				css = { "prettier", stop_after_first = true },
 			},
-			format_on_save = function()
-				if vim.g.disable_autoformat then
+			-- Single source of truth for format-on-save.
+			-- Conform creates its own BufWritePre autocmd from this;
+			-- do NOT add another manual BufWritePre calling conform.format(),
+			-- and do NOT call vim.lsp.buf.format() on save elsewhere.
+			format_on_save = function(bufnr)
+				if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
 					return
 				end
 				return {
@@ -37,14 +53,16 @@ return {
 			end,
 		})
 
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			pattern = "*",
-			callback = function(args)
-				if vim.g.disable_autoformat then
-					return
-				end
-				require("conform").format({ bufnr = args.buf })
-			end,
-		})
+		vim.api.nvim_create_user_command("FormatDisable", function(args)
+			if args.bang then
+				vim.b.disable_autoformat = true
+			else
+				vim.g.disable_autoformat = true
+			end
+		end, { desc = "Disable autoformat-on-save", bang = true })
+		vim.api.nvim_create_user_command("FormatEnable", function()
+			vim.b.disable_autoformat = false
+			vim.g.disable_autoformat = false
+		end, { desc = "Re-enable autoformat-on-save" })
 	end,
 }

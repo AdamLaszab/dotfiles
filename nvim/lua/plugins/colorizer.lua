@@ -1,38 +1,31 @@
 return {
   {
-    "norcalli/nvim-colorizer.lua",
-    event = { "BufReadPost", "BufNewFile" },
-    config = function()
-      require("colorizer").setup({
-        -- Enable color highlighting for these filetypes
+    -- norcalli's repo is archived (dead since 2021, uses deprecated
+    -- vim.tbl_flatten). catgoose's rewrite is the maintained successor:
+    -- same purpose, new structured config, 0.12-aware (it auto-disables
+    -- vim.lsp.document_color so LSP + colorizer don't double-highlight).
+    "catgoose/nvim-colorizer.lua",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      filetypes = {
         "css",
         "javascript",
         "html",
         "lua",
-        -- Add more filetypes as needed
-
-        -- Default options
-        default_options = {
-          RGB = true, -- #RGB hex codes
-          RRGGBB = true, -- #RRGGBB hex codes
-          names = true, -- "Name" codes like Blue
-          RRGGBBAA = true, -- #RRGGBBAA hex codes
-          rgb_fn = true, -- CSS rgb() and rgba() functions
-          hsl_fn = true, -- CSS hsl() and hsla() functions
-          css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-          css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-
-          -- Available modes: foreground, background
-          mode = "background", -- Set the display mode
+        "!TelescopePrompt",
+        "!lazy",
+        "!mason",
+      },
+      user_commands = true, -- :ColorizerToggle etc.
+      options = {
+        parsers = {
+          css = true, -- hex, named colors, rgb(), hsl(), oklch, css vars
+          css_fn = true, -- rgb()/hsl()/oklch() functions
         },
-
-        -- Exclude some filetypes from highlighting
-        exclusions = {
-          "TelescopePrompt",
-          "lazy",
-          "mason",
+        display = {
+          mode = "background",
         },
-      })
-    end,
+      },
+    },
   },
 }
