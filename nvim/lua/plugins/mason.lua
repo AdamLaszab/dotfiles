@@ -14,6 +14,8 @@ return {
 				"tailwindcss",
 				"html",
 				"cssls",
+				"eslint",
+				"jsonls",
 				"clangd",
 				"rust_analyzer",
 			},
@@ -50,7 +52,7 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "saghen/blink.cmp" },
+		dependencies = { "saghen/blink.cmp", "b0o/schemastore.nvim" },
 		config = function()
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
@@ -61,6 +63,16 @@ return {
 				filetypes = { "elixir", "eex", "heex", "surface" },
 			})
 
+			-- Schemas for tsconfig.json / package.json / .eslintrc etc.
+			vim.lsp.config("jsonls", {
+				settings = {
+					json = {
+						schemas = require("schemastore").json.schemas(),
+						validate = { enable = true },
+					},
+				},
+			})
+
 			vim.lsp.enable({
 				"lua_ls",
 				"elixirls",
@@ -68,6 +80,8 @@ return {
 				"tailwindcss",
 				"html",
 				"cssls",
+				"eslint",
+				"jsonls",
 				"clangd",
 				-- NOTE: rust_analyzer is NOT enabled here on purpose.
 				-- It is managed by mrcjkb/rustaceanvim (lua/plugins/rust.lua),
