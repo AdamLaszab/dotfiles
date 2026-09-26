@@ -15,6 +15,14 @@ return {
 				"html",
 				"cssls",
 				"clangd",
+				"rust_analyzer",
+			},
+			-- mason-lspconfig enables every installed server by default.
+			-- rustaceanvim already starts rust_analyzer (lua/plugins/rust.lua);
+			-- enabling it here too spawns a second client and duplicates
+			-- inline diagnostics / Trouble entries.
+			automatic_enable = {
+				exclude = { "rust_analyzer" },
 			},
 		},
 	},
@@ -36,6 +44,7 @@ return {
 				"goimports-reviser",
 				"clang-format",
 				"yamlfmt",
+				"codelldb",
 			},
 		},
 	},
@@ -60,6 +69,10 @@ return {
 				"html",
 				"cssls",
 				"clangd",
+				-- NOTE: rust_analyzer is NOT enabled here on purpose.
+				-- It is managed by mrcjkb/rustaceanvim (lua/plugins/rust.lua),
+				-- which provides runnables/debuggables/testables and DAP
+				-- integration. Enabling both causes duplicate/conflicting clients.
 			})
 
 			-- NOTE: no vim.lsp.buf.format() on save here.
@@ -78,7 +91,13 @@ return {
 				float = { border = "rounded", source = "if_many" },
 				signs = true,
 				jump = {
-					float = true,
+					on_jump = function(_, bufnr)
+						vim.diagnostic.open_float({
+							bufnr = bufnr,
+							scope = "cursor",
+							focus = false,
+						})
+					end,
 				},
 			})
 
